@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  overflow: hidden;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Fonts  */
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+  width: 12px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Color of the track */
+  border-radius: 10px; /* Roundness of the track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1f1f1f; /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Roundness of the thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Color of the scrollbar thumb on hover */
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin; /* "auto" or "thin" */
+  scrollbar-color: #1f1f1f #f1f1f1; /* thumb and track color */
+}
