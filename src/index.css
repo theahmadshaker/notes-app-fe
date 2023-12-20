@@ -33,3 +33,9 @@ body {
   scrollbar-width: thin; /* "auto" or "thin" */
   scrollbar-color: #1f1f1f #f1f1f1; /* thumb and track color */
 }
+
+/* Gradient colors */
+
+.gradient-color {
+  background-color: "linear-gradient(45deg, #7c3aed, #2563eb, #059669, #eab308, #e11d48, #db2777)";
+}

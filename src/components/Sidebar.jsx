@@ -8,20 +8,20 @@ import { Disclosure, RadioGroup } from "@headlessui/react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Sidebar = () => {
-  const colorClassnames = [
-    "#7c3aed",
-    "#2563eb",
-    "#059669",
-    "#eab308",
-    "#e11d48",
-    "#db2777",
-  ];
+  const colors = {
+    purple: "#7c3aed",
+    blue: "#2563eb",
+    green: "#059669",
+    yellow: "#eab308",
+    red: "#e11d48",
+    pink: "#db2777",
+  };
 
   return (
     <div className="h-full w-1/12 flex flex-col items-center justify-start border-r border-gray-200 py-10 space-y-8">
       <h1 className="text-xl font-semibold">Noterize</h1>
       <div className="flex  flex-col items-center justify-start">
-        <CategorySelector colors={colorClassnames} />
+        <CategorySelector colors={colors} />
       </div>
     </div>
   );
@@ -34,9 +34,12 @@ const CategorySelector = ({ colors }) => {
 
   const animationDelay = 0.1; // delay between each bubble animation in seconds
 
+  let colorValues = Object.values(colors);
+  // let colorKeys = Object.keys(colors);
+
   // This function sets the color for the last bubble which will be a filter that includes all notes
   const generateGradient = (colors) => {
-    return `linear-gradient(45deg, ${colors.join(", ")})`;
+    return `linear-gradient(90deg, ${colors.join(", ")})`;
   };
 
   return (
@@ -61,32 +64,35 @@ const CategorySelector = ({ colors }) => {
               />
             </svg>
           </Disclosure.Button>
-
-          {open && (
-            <Disclosure.Panel static>
-              <RadioGroup
-                className="flex flex-col items-center justify-center py-6 space-y-[32px]"
-                value={activeColor}
-              >
-                {colors.map((color, index) => (
+          <AnimatePresence>
+            {open && (
+              <Disclosure.Panel static>
+                <RadioGroup
+                  className="flex flex-col items-center justify-center py-6 space-y-[32px]"
+                  value={activeColor}
+                >
+                  {colorValues.map((color, index) => (
+                    <ColorBubble
+                      key={color}
+                      color={color}
+                      delay={index * animationDelay}
+                      activeColor={activeColor}
+                      setActiveColor={() => {
+                        setActiveColor(color);
+                      }}
+                    />
+                  ))}
                   <ColorBubble
-                    key={color}
-                    color={color}
-                    delay={index * animationDelay}
-                    setActiveColor={() => {
-                      setActiveColor(color), console.log(activeColor);
-                    }}
+                    key="gradient"
+                    color={generateGradient(colorValues)}
+                    delay={colorValues.length * animationDelay}
+                    activeColor={activeColor}
+                    setActiveColor={() => setActiveColor("All")}
                   />
-                ))}
-                <ColorBubble
-                  key="gradient"
-                  color={generateGradient(colors)}
-                  delay={colors.length * animationDelay}
-                  setActiveColor={() => setActiveColor("All")}
-                />
-              </RadioGroup>
-            </Disclosure.Panel>
-          )}
+                </RadioGroup>
+              </Disclosure.Panel>
+            )}
+          </AnimatePresence>
         </>
       )}
     </Disclosure>
@@ -97,20 +103,28 @@ const ColorBubble = ({ color, delay, activeColor, setActiveColor }) => {
   const initialY = -32; // Initial Y position offset
   const isSelected = activeColor === color;
 
-  console.log("ColorBubble color:", color);
+  const scaleVariants = {
+    hidden: { scale: 0 },
+    visible: { scale: 1 },
+  };
 
   return (
-    <AnimatePresence>
-      <motion.button
-        initial={{ opacity: 0, y: initialY }}
-        animate={{ opacity: 1, y: 0, transition: { delay: delay } }}
-        exit={{ opacity: 0, y: initialY, transition: { duration: 0.2 } }}
-        className={`w-6 h-6 rounded-full duration-300 ${
-          isSelected ? `ring-2 ring-offset-2 ring-white` : ""
-        }`}
-        style={{ backgroundColor: color }}
-        onClick={setActiveColor}
-      />
-    </AnimatePresence>
+    <motion.button
+      initial={{ opacity: 0, y: initialY }}
+      animate={{ opacity: 1, y: 0, transition: { delay: delay } }}
+      exit={{ opacity: 0, y: initialY, transition: { duration: 0.1 } }}
+      className="w-8 h-8 rounded-full focus:outline-none flex flex-row items-center justify-center"
+      style={{ background: color }}
+      onClick={setActiveColor}
+    >
+      {isSelected && (
+        <motion.div
+          className="w-1/2 h-1/2 rounded-full bg-white"
+          initial="hidden"
+          animate="visible"
+          variants={scaleVariants}
+        />
+      )}
+    </motion.button>
   );
 };
