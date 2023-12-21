@@ -1,6 +1,6 @@
 const Searchbar = () => {
   return (
-    <div className="w-full h-36 flex flex-row items-center justify-start px-24 space-x-2 border-b border-gray-200">
+    <div className="w-full h-24 flex flex-row items-center justify-start px-24 space-x-2 border-b border-gray-200">
       <Magnifier />
       <input
         className="text-gray-600 text-xl focus:outline-none w-full h-full"

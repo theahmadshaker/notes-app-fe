@@ -22,22 +22,7 @@ const NotesGrid = () => {
           </svg>
         </button>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-10 w-full p-4 justify-center overflow-y-auto">
-        <NotesCard />
-        <NotesCard />
-        <NotesCard />
-        <NotesCard />
-        <NotesCard />
-        <NotesCard />
-        <NotesCard />
-        <NotesCard />
-        <NotesCard />
-        <NotesCard />
-        <NotesCard />
-        <NotesCard />
-        <NotesCard />
-        <NotesCard />
-        <NotesCard />
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-10 w-full p-4 justify-center overflow-y-auto flex-grow">
         <NotesCard />
       </div>
     </div>
