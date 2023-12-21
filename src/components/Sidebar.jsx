@@ -37,11 +37,6 @@ const CategorySelector = ({ colors }) => {
   let colorValues = Object.values(colors);
   // let colorKeys = Object.keys(colors);
 
-  // This function sets the color for the last bubble which will be a filter that includes all notes
-  const generateGradient = (colors) => {
-    return `linear-gradient(90deg, ${colors.join(", ")})`;
-  };
-
   return (
     <Disclosure>
       {({ open }) => (
@@ -82,13 +77,6 @@ const CategorySelector = ({ colors }) => {
                       }}
                     />
                   ))}
-                  <ColorBubble
-                    key="gradient"
-                    color={generateGradient(colorValues)}
-                    delay={colorValues.length * animationDelay}
-                    activeColor={activeColor}
-                    setActiveColor={() => setActiveColor("All")}
-                  />
                 </RadioGroup>
               </Disclosure.Panel>
             )}
