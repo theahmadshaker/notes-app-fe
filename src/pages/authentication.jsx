@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 // Functions
-// import enterAccount from "../utils/enterAccount";
+import enterAccount from "../utils/enterAccount";
 
 const Authentication = () => {
   const [emailValue, setEmailValue] = useState("");
@@ -43,8 +43,7 @@ const Authentication = () => {
             <button
               className="w-full h-10 rounded-lg bg-black text-white font-semibold hover:opacity-80 duration-300"
               onClick={() => {
-                // enterAccount(emailValue, passwordValue);
-                console.log("test");
+                enterAccount(emailValue, passwordValue);
               }}
             >
               Enter

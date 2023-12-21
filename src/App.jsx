@@ -1,26 +1,32 @@
-// React
-// import {useState} from "react"
-
+import { useEffect, useState } from "react";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import "./App.css";
 import NotesPanel from "./pages/notesPanel";
 import Authentication from "./pages/authentication";
-
-// Fonts
 import "typeface-poppins";
 
 function App() {
-  // To be changed to a react useState later
-  const isUserAuthenticated = true;
+  const [isUserAuthenticated, setIsUserAuthenticated] = useState(null);
+  const auth = getAuth();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setIsUserAuthenticated(!!user);
+    });
+
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
+  }, [auth]);
+
+  if (isUserAuthenticated === null) {
+    return <div>Loading...</div>; // Or any other loading state representation
+  }
 
   if (!isUserAuthenticated) {
     return <Authentication />;
   }
 
-  return (
-    <>
-      <NotesPanel />
-    </>
-  );
+  return <NotesPanel />;
 }
 
 export default App;

@@ -34,7 +34,7 @@ const NotesCard = () => {
   };
 
   return (
-    <div>
+    <>
       {isOpen && (
         <BlurLayer
           onClick={() => {
@@ -64,7 +64,7 @@ const NotesCard = () => {
             onClick={(event) => {
               event.stopPropagation();
             }}
-            className="focus:outline-none text-xs w-full"
+            className="focus:outline-none text-sm w-full"
           >
             This is the card description here{" "}
           </h5>
@@ -73,11 +73,12 @@ const NotesCard = () => {
           onClick={(event) => {
             event.stopPropagation();
           }}
+          className="text-sm"
         >
           May, 25th 2023
         </h3>
       </motion.div>
-    </div>
+    </>
   );
 };
 
