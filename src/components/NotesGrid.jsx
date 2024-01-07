@@ -10,7 +10,7 @@ import useFetchNotes from "../hooks/useFetchNotes";
 
 const NotesGrid = () => {
   const { activeColor } = useColor();
-  const { notes, loading } = useFetchNotes(activeColor); // Replace 'red' with the color you want to fetch
+  const { notes, loading } = useFetchNotes(activeColor);
 
   useEffect(() => {}, [notes]);
 
@@ -40,7 +40,7 @@ const NotesGrid = () => {
           </svg>
         </button>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-10 w-full p-4 justify-center overflow-y-auto flex-grow">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-10 w-full p-4 justify-center overflow-y-auto flex-grow">
         {notes &&
           notes.map((note) => (
             <NotesCard
@@ -48,6 +48,7 @@ const NotesGrid = () => {
               title={note.name}
               description={note.description}
               date={note.date}
+              backgroundColor={activeColor}
             />
           ))}
       </div>

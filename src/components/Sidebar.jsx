@@ -9,12 +9,11 @@ import { useColor } from "../hooks/useActiveColor";
 
 const Sidebar = () => {
   const colors = {
-    purple: "#7c3aed",
-    blue: "#2563eb",
-    green: "#059669",
-    yellow: "#eab308",
-    red: "#e11d48",
-    pink: "#db2777",
+    orange: "#fdba74",
+    blue: "#0dd4fa",
+    violet: "#b99bf8",
+    red: "#fa9c75",
+    emerald: "#34d399",
   };
 
   return (
@@ -34,8 +33,7 @@ const CategorySelector = ({ colors }) => {
 
   const animationDelay = 0.1; // delay between each bubble animation in seconds
 
-  let colorValues = Object.keys(colors);
-  // let colorKeys = Object.keys(colors);
+  let colorValues = Object.values(colors);
 
   return (
     <Disclosure>

@@ -1,11 +1,12 @@
 import { motion } from "framer-motion";
 
-const NotesCard = ({ title, description, date, openCard }) => {
+const NotesCard = ({ title, description, date, openCard, backgroundColor }) => {
   return (
     <motion.div
       initial={{ scale: 1 }}
       onClick={openCard}
-      className="w-full h-48 max-w-md aspect-video rounded-3xl bg-violet-700 p-6 cursor-pointer flex flex-col items-start justify-between"
+      className="w-full aspect-square max-w-md  rounded-3xl p-6 cursor-pointer flex flex-col items-start justify-between"
+      style={{ backgroundColor: backgroundColor }}
     >
       <div className="flex flex-col items-start justify-start">
         <h1
