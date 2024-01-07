@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import BlurLayer from "./BlurLayer";
 import { useEffect, useRef, useState } from "react";
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, updateDoc, deleteDoc } from "firebase/firestore";
 import { auth, db } from "../config/firebase"; // Import Firebase config
 
 const OpenNotesCard = ({
@@ -41,6 +41,27 @@ const OpenNotesCard = ({
     }
   };
 
+  const handleDelete = async () => {
+    const user = auth.currentUser;
+    if (!user || !user.uid) {
+      console.error("User must be logged in to delete a note");
+      return;
+    }
+
+    if (!id) {
+      console.error("Invalid note ID");
+      return;
+    }
+
+    const noteRef = doc(db, "users", user.uid, "notes", id);
+
+    try {
+      await deleteDoc(noteRef);
+      closeCard(); // Close the card after deletion
+    } catch (error) {
+      console.error("Error deleting note:", error);
+    }
+  };
   // Center the card on the screen
   useEffect(() => {
     if (cardRef.current) {
@@ -66,7 +87,7 @@ const OpenNotesCard = ({
         style={{
           backgroundColor: backgroundColor,
           position: "absolute",
-          scale: 1.5,
+          scale: 1.6,
         }}
       >
         <div className="flex flex-col items-start justify-start">
@@ -85,10 +106,26 @@ const OpenNotesCard = ({
             rows="4"
           />
         </div>
-        <h3 className="text-sm">{date}</h3>
+        <div className="flex flex-row items-center justify-between w-full">
+          <h3 className="text-sm">{date}</h3>
+          <div className="flex flex-row items-center space-x-2">
+            <DeleteButton onDelete={handleDelete} />
+          </div>
+        </div>
       </motion.div>
     </>
   );
 };
 
 export default OpenNotesCard;
+
+const DeleteButton = ({ onDelete }) => {
+  return (
+    <button
+      onClick={onDelete}
+      className="h-6 px-2 py-1 rounded-md group bg-black flex flex-row items-center justify-center p-1 text-xs text-white hover:shadow-2xl hover:text-red-600 font-semibold duration-300 "
+    >
+      Delete
+    </button>
+  );
+};

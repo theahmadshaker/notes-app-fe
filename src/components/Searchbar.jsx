@@ -1,4 +1,4 @@
-const Searchbar = () => {
+const Searchbar = ({ onSearchChange }) => {
   return (
     <div className="w-full h-24 flex flex-row items-center justify-start px-24 space-x-2 border-b border-gray-200">
       <Magnifier />
@@ -6,6 +6,7 @@ const Searchbar = () => {
         className="text-gray-600 text-xl focus:outline-none w-full h-full"
         type="text"
         placeholder="Search"
+        onChange={(e) => onSearchChange(e.target.value)}
       />
     </div>
   );

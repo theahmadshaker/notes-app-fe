@@ -12,14 +12,23 @@ const NotesGrid = () => {
   const { activeColor } = useColor();
   const { notes, loading } = useFetchNotes(activeColor);
   const [selectedId, setSelectedId] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  useEffect(() => {
-    console.log(selectedId);
-  }, [selectedId]);
+  useEffect(() => {}, [selectedId]);
 
   if (loading) {
     return <div>Loading notes...</div>;
   }
+
+  const handleSearchChange = (query) => {
+    setSearchQuery(query.toLowerCase());
+  };
+
+  const filteredNotes = notes.filter(
+    (note) =>
+      note.name.toLowerCase().includes(searchQuery) ||
+      note.description.toLowerCase().includes(searchQuery)
+  );
 
   const handleCardClick = (id) => {
     setSelectedId(id);
@@ -27,15 +36,16 @@ const NotesGrid = () => {
 
   return (
     <div className="flex flex-col items-start justify-start flex-grow h-full w-full">
-      <Searchbar />
+      <Searchbar onSearchChange={handleSearchChange} />
+
       <div className="flex flex-row items-center justify-start px-12 py-6 w-full">
         <h1 className="text-4xl text-black font-semibold">Notes</h1>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-10 w-full p-4 justify-center overflow-y-auto flex-grow">
-        {notes.length === 0 ? (
+        {filteredNotes.length === 0 ? (
           <div>No notes to display</div>
         ) : (
-          notes.map((note) =>
+          filteredNotes.map((note) =>
             selectedId === note.id ? (
               <>
                 <PlaceholderCard />

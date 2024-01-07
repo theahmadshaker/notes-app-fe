@@ -8,6 +8,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useColor } from "../hooks/useActiveColor";
 import createNote from "../utils/createNote";
 
+import { auth } from "../config/firebase";
+
 const Sidebar = () => {
   const colors = {
     orange: "#fdba74",
@@ -17,12 +19,30 @@ const Sidebar = () => {
     emerald: "#34d399",
   };
 
+  const signOutUser = async () => {
+    try {
+      await auth.signOut();
+      console.log("User signed out successfully");
+      // Additional actions after successful sign out (e.g., redirecting the user)
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
+  };
+
   return (
-    <div className="h-full w-1/12 flex flex-col items-center justify-start border-r border-gray-200 py-10 space-y-8">
-      <h1 className="text-xl font-semibold">Noterize</h1>
-      <div className="flex  flex-col items-center justify-start">
-        <CategorySelector colors={colors} />
+    <div className="h-full w-1/12 flex flex-col items-center justify-between border-r border-gray-200 py-10 space-y-8">
+      <div className="space-y-8">
+        <h1 className="text-xl font-semibold">Noterize</h1>
+        <div className="flex  flex-col items-center justify-start h-full w-full">
+          <CategorySelector colors={colors} />
+        </div>
       </div>
+      <button
+        onClick={() => signOutUser()}
+        className="w-2/3 aspect-video bg-red-600 rounded-xl px-2 py-1 font-semibold text-white hover:brightness-110 duration-300"
+      >
+        Sign out
+      </button>
     </div>
   );
 };
@@ -62,7 +82,7 @@ const CategorySelector = ({ colors }) => {
             {open && (
               <Disclosure.Panel static>
                 <RadioGroup
-                  className="flex flex-col items-center justify-center py-6 space-y-[32px]"
+                  className="flex flex-col items-center justify-start py-6 space-y-[32px]"
                   value={activeColor}
                 >
                   {colorValues.map((color, index) => (
@@ -78,6 +98,8 @@ const CategorySelector = ({ colors }) => {
           </AnimatePresence>
         </>
       )}
+
+      {/* <button className="h-full bg-red-600"> Sign out</button> */}
     </Disclosure>
   );
 };
