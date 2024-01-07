@@ -3,13 +3,22 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import "./App.css";
 import NotesPanel from "./pages/notesPanel";
 import Authentication from "./pages/authentication";
-import { ColorProvider } from "./context/ActiveColorContext";
 
+// Custom hooks
+// import useFetchNotes from "./hooks/useFetchNotes";
+
+// Fonts
 import "typeface-poppins";
+
+// Providers
+import NotesProvider from "./context/NotesContext";
+import { ColorProvider } from "./context/ActiveColorContext";
 
 function App() {
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(null);
   const auth = getAuth();
+
+  // useFetchNotes();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -31,7 +40,9 @@ function App() {
   // Ensure the return statement and the opening parenthesis of JSX are on the same line
   return (
     <ColorProvider>
-      <NotesPanel />
+      <NotesProvider>
+        <NotesPanel />
+      </NotesProvider>
     </ColorProvider>
   );
 }

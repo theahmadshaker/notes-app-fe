@@ -2,11 +2,21 @@ import Searchbar from "./Searchbar";
 import NotesCard from "./NotesCard";
 import createNote from "../utils/createNote";
 
+import { useEffect } from "react";
+
 import { useColor } from "../hooks/useActiveColor";
+
+import useFetchNotes from "../hooks/useFetchNotes";
 
 const NotesGrid = () => {
   const { activeColor } = useColor();
+  const { notes, loading } = useFetchNotes(activeColor); // Replace 'red' with the color you want to fetch
 
+  useEffect(() => {}, [notes]);
+
+  if (loading) {
+    return <div>Loading notes...</div>;
+  }
   return (
     <div className="flex flex-col items-start justify-start flex-grow h-full w-full">
       <Searchbar />
@@ -31,10 +41,15 @@ const NotesGrid = () => {
         </button>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-10 w-full p-4 justify-center overflow-y-auto flex-grow">
-        <NotesCard key={1} />
-        <NotesCard key={2} />
-        <NotesCard key={3} />
-        <NotesCard key={4} />
+        {notes &&
+          notes.map((note) => (
+            <NotesCard
+              key={note.id}
+              title={note.name}
+              description={note.description}
+              date={note.date}
+            />
+          ))}
       </div>
     </div>
   );

@@ -13,8 +13,8 @@ async function createNote(color) {
 
   // Prepare the note data
   const noteData = {
-    name: "",
-    description: "",
+    name: "Untitled",
+    description: "Undescribed",
     date: today,
   };
 
