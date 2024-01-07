@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Searchbar from "./Searchbar";
 import NotesCard from "./NotesCard";
@@ -6,11 +6,16 @@ import OpenNotesCard from "./OpenNotesCard";
 
 import { useColor } from "../hooks/useActiveColor";
 import useFetchNotes from "../hooks/useFetchNotes";
+import { AnimatePresence } from "framer-motion";
 
 const NotesGrid = () => {
   const { activeColor } = useColor();
   const { notes, loading } = useFetchNotes(activeColor);
   const [selectedId, setSelectedId] = useState(null);
+
+  useEffect(() => {
+    console.log(selectedId);
+  }, [selectedId]);
 
   if (loading) {
     return <div>Loading notes...</div>;
@@ -32,15 +37,22 @@ const NotesGrid = () => {
         ) : (
           notes.map((note) =>
             selectedId === note.id ? (
-              <OpenNotesCard
-                layoutId={`note-${note.id}`}
-                key={note.id}
-                title={note.name}
-                description={note.description}
-                date={note.date}
-                backgroundColor={note.color}
-                closeCard={() => setSelectedId(null)}
-              />
+              <>
+                <PlaceholderCard />
+
+                <AnimatePresence>
+                  <OpenNotesCard
+                    layoutId={`note-${note.id}`}
+                    key={note.id}
+                    initialTitle={note.name}
+                    initialDescription={note.description}
+                    date={note.date}
+                    backgroundColor={note.color}
+                    closeCard={() => setSelectedId(null)}
+                    id={note.id}
+                  />
+                </AnimatePresence>
+              </>
             ) : (
               <NotesCard
                 layoutId={`note-${note.id}`}
@@ -60,3 +72,11 @@ const NotesGrid = () => {
 };
 
 export default NotesGrid;
+
+const PlaceholderCard = () => {
+  return (
+    <div className="w-full aspect-square max-w-md rounded-3xl p-6 invisible">
+      {/* Invisible placeholder */}
+    </div>
+  );
+};

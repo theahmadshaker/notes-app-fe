@@ -14,7 +14,7 @@ async function createNote(color) {
   // Prepare the note data with an empty description and a server timestamp
   const noteData = {
     name: "Untitled",
-    description: "",
+    description: "Add a description",
     date: today,
     createdAt: serverTimestamp(), // Use Firestore's server timestamp
   };
