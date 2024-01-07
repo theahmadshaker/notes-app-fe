@@ -1,8 +1,16 @@
 import { motion } from "framer-motion";
 
-const NotesCard = ({ title, description, date, openCard, backgroundColor }) => {
+const NotesCard = ({
+  title,
+  description,
+  date,
+  openCard,
+  backgroundColor,
+  layoutId,
+}) => {
   return (
     <motion.div
+      layoutId={layoutId}
       onClick={openCard}
       className="w-full aspect-square max-w-md rounded-3xl p-6 cursor-pointer flex flex-col items-start justify-between"
       style={{ backgroundColor: backgroundColor }}
