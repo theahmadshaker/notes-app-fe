@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 // Global context
 import { useColor } from "../hooks/useActiveColor";
+import createNote from "../utils/createNote";
 
 const Sidebar = () => {
   const colors = {
@@ -29,7 +30,7 @@ const Sidebar = () => {
 export default Sidebar;
 
 const CategorySelector = ({ colors }) => {
-  const { activeColor, setActiveColor } = useColor();
+  const { activeColor } = useColor();
 
   const animationDelay = 0.1; // delay between each bubble animation in seconds
 
@@ -69,10 +70,6 @@ const CategorySelector = ({ colors }) => {
                       key={color}
                       color={color}
                       delay={index * animationDelay}
-                      activeColor={activeColor}
-                      setActiveColor={() => {
-                        setActiveColor(color);
-                      }}
                     />
                   ))}
                 </RadioGroup>
@@ -85,32 +82,17 @@ const CategorySelector = ({ colors }) => {
   );
 };
 
-const ColorBubble = ({ color, delay, activeColor, setActiveColor }) => {
+const ColorBubble = ({ color, delay }) => {
   const initialY = -32; // Initial Y position offset
-  const isSelected = activeColor === color;
-
-  const scaleVariants = {
-    hidden: { scale: 0 },
-    visible: { scale: 1 },
-  };
 
   return (
     <motion.button
       initial={{ opacity: 0, y: initialY }}
       animate={{ opacity: 1, y: 0, transition: { delay: delay } }}
       exit={{ opacity: 0, y: initialY, transition: { duration: 0.1 } }}
-      className="w-8 h-8 rounded-full focus:outline-none flex flex-row items-center justify-center"
+      className="w-6 h-6 rounded-full focus:outline-none flex flex-row items-center justify-center"
       style={{ background: color }}
-      onClick={setActiveColor}
-    >
-      {isSelected && (
-        <motion.div
-          className="w-1/2 h-1/2 rounded-full bg-white"
-          initial="hidden"
-          animate="visible"
-          variants={scaleVariants}
-        />
-      )}
-    </motion.button>
+      onClick={() => createNote(color)}
+    ></motion.button>
   );
 };

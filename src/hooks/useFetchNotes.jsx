@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
 import { auth, db } from "../config/firebase";
 
 const useFetchNotes = (color) => {
@@ -14,8 +14,13 @@ const useFetchNotes = (color) => {
       return;
     }
 
+    // Reference to the 'notes' subcollection
+    const notesRef = collection(db, "users", user.uid, "notes");
+    // Create a query that orders notes by the 'createdAt' field in descending order
+    const q = query(notesRef, orderBy("createdAt", "desc"));
+
     const unsubscribe = onSnapshot(
-      collection(db, "users", user.uid, color),
+      q,
       (querySnapshot) => {
         const dataArray = querySnapshot.docs.map((docSnapshot) => ({
           id: docSnapshot.id,
@@ -32,7 +37,7 @@ const useFetchNotes = (color) => {
 
     // Cleanup function to unsubscribe from the listener when the component unmounts
     return () => unsubscribe();
-  }, [color]);
+  }, [color]); // If the color is used to filter notes, it should stay in the dependency array
 
   return { notes, loading };
 };
