@@ -14,7 +14,7 @@ const NotesCard = () => {
       controls.start({
         x: window.innerWidth / 2 - rect.left - rect.width / 2,
         y: window.innerHeight / 2 - rect.top - rect.height / 2,
-        zIndex: 10, // Ensure zIndex is higher than BlurLayer
+        zIndex: 1, // Ensure zIndex is higher than BlurLayer
         scale: 2,
         transition: { ease: "easeInOut", duration: 0.4 },
       });
@@ -47,7 +47,7 @@ const NotesCard = () => {
         initial={{ scale: 1 }}
         animate={controls}
         onClick={handleClick}
-        className="w-full max-w-md aspect-video rounded-3xl bg-violet-700 p-6 cursor-pointer flex flex-col items-start justify-between"
+        className="w-full h-48 max-w-md aspect-video rounded-3xl bg-violet-700 p-6 cursor-pointer flex flex-col items-start justify-between"
       >
         <div className="flex flex-col items-start justify-start">
           <h1

@@ -1,11 +1,11 @@
-// React
-import { useState } from "react";
-
 // HeadlessUI
 import { Disclosure, RadioGroup } from "@headlessui/react";
 
 // Framer
 import { motion, AnimatePresence } from "framer-motion";
+
+// Global context
+import { useColor } from "../hooks/useActiveColor";
 
 const Sidebar = () => {
   const colors = {
@@ -30,11 +30,11 @@ const Sidebar = () => {
 export default Sidebar;
 
 const CategorySelector = ({ colors }) => {
-  const [activeColor, setActiveColor] = useState("All");
+  const { activeColor, setActiveColor } = useColor();
 
   const animationDelay = 0.1; // delay between each bubble animation in seconds
 
-  let colorValues = Object.values(colors);
+  let colorValues = Object.keys(colors);
   // let colorKeys = Object.keys(colors);
 
   return (

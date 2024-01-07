@@ -1,13 +1,21 @@
 import Searchbar from "./Searchbar";
 import NotesCard from "./NotesCard";
+import createNote from "../utils/createNote";
+
+import { useColor } from "../hooks/useActiveColor";
 
 const NotesGrid = () => {
+  const { activeColor } = useColor();
+
   return (
     <div className="flex flex-col items-start justify-start flex-grow h-full w-full">
       <Searchbar />
       <div className="flex flex-row items-center justify-between px-12 py-6 w-full">
         <h1 className="text-4xl text-black font-semibold">Notes</h1>
-        <button className="h-10 w-10 rounded-full bg-black flex flex-row items-center justify-center hover:animate-pulse">
+        <button
+          className="h-10 w-10 rounded-full bg-black flex flex-row items-center justify-center hover:animate-pulse"
+          onClick={() => createNote(activeColor)}
+        >
           <svg
             width="24"
             height="24"
@@ -23,7 +31,10 @@ const NotesGrid = () => {
         </button>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-10 w-full p-4 justify-center overflow-y-auto flex-grow">
-        <NotesCard />
+        <NotesCard key={1} />
+        <NotesCard key={2} />
+        <NotesCard key={3} />
+        <NotesCard key={4} />
       </div>
     </div>
   );

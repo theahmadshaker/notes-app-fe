@@ -3,6 +3,8 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import "./App.css";
 import NotesPanel from "./pages/notesPanel";
 import Authentication from "./pages/authentication";
+import { ColorProvider } from "./context/ActiveColorContext";
+
 import "typeface-poppins";
 
 function App() {
@@ -26,7 +28,12 @@ function App() {
     return <Authentication />;
   }
 
-  return <NotesPanel />;
+  // Ensure the return statement and the opening parenthesis of JSX are on the same line
+  return (
+    <ColorProvider>
+      <NotesPanel />
+    </ColorProvider>
+  );
 }
 
 export default App;
