@@ -12,7 +12,6 @@ import "typeface-poppins";
 
 // Providers
 import NotesProvider from "./context/NotesContext";
-import { ColorProvider } from "./context/ActiveColorContext";
 
 function App() {
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(null);
@@ -39,11 +38,9 @@ function App() {
 
   // Ensure the return statement and the opening parenthesis of JSX are on the same line
   return (
-    <ColorProvider>
-      <NotesProvider>
-        <NotesPanel />
-      </NotesProvider>
-    </ColorProvider>
+    <NotesProvider>
+      <NotesPanel />
+    </NotesProvider>
   );
 }
 

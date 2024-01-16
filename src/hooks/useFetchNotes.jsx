@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
 import { auth, db } from "../config/firebase";
 
-const useFetchNotes = (color) => {
+const useFetchNotes = () => {
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -37,7 +37,7 @@ const useFetchNotes = (color) => {
 
     // Cleanup function to unsubscribe from the listener when the component unmounts
     return () => unsubscribe();
-  }, [color]); // If the color is used to filter notes, it should stay in the dependency array
+  }, []); // If the color is used to filter notes, it should stay in the dependency array
 
   return { notes, loading };
 };

@@ -4,13 +4,11 @@ import Searchbar from "./Searchbar";
 import NotesCard from "./NotesCard";
 import OpenNotesCard from "./OpenNotesCard";
 
-import { useColor } from "../hooks/useActiveColor";
 import useFetchNotes from "../hooks/useFetchNotes";
 import { AnimatePresence } from "framer-motion";
 
 const NotesGrid = () => {
-  const { activeColor } = useColor();
-  const { notes, loading } = useFetchNotes(activeColor);
+  const { notes, loading } = useFetchNotes();
   const [selectedId, setSelectedId] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
 

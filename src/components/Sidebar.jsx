@@ -1,11 +1,10 @@
 // HeadlessUI
-import { Disclosure, RadioGroup } from "@headlessui/react";
+import { Disclosure } from "@headlessui/react";
 
 // Framer
 import { motion, AnimatePresence } from "framer-motion";
 
 // Global context
-import { useColor } from "../hooks/useActiveColor";
 import createNote from "../utils/createNote";
 
 import { auth } from "../config/firebase";
@@ -50,8 +49,6 @@ const Sidebar = () => {
 export default Sidebar;
 
 const CategorySelector = ({ colors }) => {
-  const { activeColor } = useColor();
-
   const animationDelay = 0.1; // delay between each bubble animation in seconds
 
   let colorValues = Object.values(colors);
@@ -81,18 +78,13 @@ const CategorySelector = ({ colors }) => {
           <AnimatePresence>
             {open && (
               <Disclosure.Panel static>
-                <RadioGroup
-                  className="flex flex-col items-center justify-start py-6 space-y-[32px]"
-                  value={activeColor}
-                >
-                  {colorValues.map((color, index) => (
-                    <ColorBubble
-                      key={color}
-                      color={color}
-                      delay={index * animationDelay}
-                    />
-                  ))}
-                </RadioGroup>
+                {colorValues.map((color, index) => (
+                  <ColorBubble
+                    key={color}
+                    color={color}
+                    delay={index * animationDelay}
+                  />
+                ))}
               </Disclosure.Panel>
             )}
           </AnimatePresence>
