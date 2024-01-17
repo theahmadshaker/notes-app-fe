@@ -46,7 +46,7 @@ const NotesGrid = () => {
           filteredNotes.map((note) =>
             selectedId === note.id ? (
               <>
-                <PlaceholderCard />
+                <PlaceholderCard key={note.id} />
 
                 <AnimatePresence>
                   <OpenNotesCard

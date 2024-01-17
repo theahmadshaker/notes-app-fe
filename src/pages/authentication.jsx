@@ -2,6 +2,7 @@ import { useState } from "react";
 
 // Functions
 import enterAccount from "../utils/enterAccount";
+import isValidEmail from "../utils/isValidEmail";
 
 const Authentication = () => {
   const [emailValue, setEmailValue] = useState("");
@@ -43,7 +44,8 @@ const Authentication = () => {
             <button
               className="w-full h-10 rounded-lg bg-black text-white font-semibold hover:opacity-80 duration-300"
               onClick={() => {
-                enterAccount(emailValue, passwordValue);
+                isValidEmail(emailValue) &&
+                  enterAccount(emailValue, passwordValue);
               }}
             >
               Enter

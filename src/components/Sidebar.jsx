@@ -77,7 +77,7 @@ const CategorySelector = ({ colors }) => {
           </Disclosure.Button>
           <AnimatePresence>
             {open && (
-              <Disclosure.Panel static>
+              <Disclosure.Panel as="div" className="py-8 space-y-8" static>
                 {colorValues.map((color, index) => (
                   <ColorBubble
                     key={color}
